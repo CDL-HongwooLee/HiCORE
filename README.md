@@ -17,14 +17,17 @@ Juicer
 Github
 
 ## Input data
-### Matrix file
-### Chrom.sizes file
-### Genome digestion file
+#### Matrix file
+#### Chrom.sizes file
+#### Genome digestion file
 
 ## Run HiCORE
-# hicBinning.py
-# HiCORE.py
+#### hicBinning.py
+#### HiCORE.py
 
 ## Output data
 
 ## Utils
+#### mergeDump.py
+#### make1f_bed.py
+#### makeRandomFragment.py
