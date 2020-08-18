@@ -17,9 +17,9 @@ Juicer
 Github
 
 ## Input data
-# Matrix file
-# Chrom.sizes file
-# Genome digestion file
+### Matrix file
+### Chrom.sizes file
+### Genome digestion file
 
 ## Run HiCORE
 # hicBinning.py
