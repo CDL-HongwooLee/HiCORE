@@ -1,6 +1,6 @@
 # HiCORE
 
-## HiCORE packages
+## HiCORE
 HiCORE was 
 
 
