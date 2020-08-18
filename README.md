@@ -7,7 +7,24 @@ Find documentation and examples at ************
 For any question about HiCORE, please contact miso5103@snu.ac.kr.
 
 ## Dependencies
+python3
+subprocess
+multiprocessing
+Fit-HiC2
+Juicer
 
 ## Installation
+Github
 
-## 
+## Input data
+# Matrix file
+# Chrom.sizes file
+# Genome digestion file
+
+## Run HiCORE
+# hicBinning.py
+# HiCORE.py
+
+## Output data
+
+## Utils
