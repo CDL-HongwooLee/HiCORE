@@ -15,9 +15,9 @@ Juicer
 
 ## Installation
 Github Install
-...
+'''
 git clone ******
-...
+'''
 
 ## Input data
 #### Matrix file
