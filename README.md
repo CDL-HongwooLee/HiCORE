@@ -98,6 +98,11 @@ Optional arguments:
                         "Low" process is relatively slow but more stable. (default : "Low")
 
 ```
+
+#### Example run
+
+```python3 hicBinning.py -i ./Interaction_Matrix.txt -g ./reference/hg19.chrom.sizes -r ./reference/hg19_DpnII.txt -f 1000 -n 20 -o ./HiCORE_out -t 10 ```
+
 #### Output files
 
 ##### .bed file
@@ -129,13 +134,6 @@ Chr1    3545    3704    3
 Chr1    3704    3766    3
 Chr1    3766    3895    3
 Chr1    3895    4555    3
-Chr1    4555    4645    4
-Chr1    4645    4734    4
-Chr1    4734    4827    4
-Chr1    4827    5024    4
-Chr1    5024    5088    4
-Chr1    5088    5489    4
-Chr1    5489    5573    4
 ```
 
 ##### interaction & fragments file
@@ -150,7 +148,7 @@ Chr1    659     Chr1    4050    13
 Chr1    659     Chr1    5064    16
 Chr1    659     Chr1    6243    10
 ```
-fragments files (gzipped
+fragments files (gzipped)
 ```
 Chr1    0       659     641     1
 Chr1    1319    2432    1304    1
@@ -161,9 +159,7 @@ Chr1    5573    6243    3263    1
 
 ### Overlap & Expand looping regions
 
-#### Example run
 
-```python3 hicBinning.py -i ./Interaction_Matrix.txt -g ./reference/hg19.chrom.sizes -r ./reference/hg19_DpnII.txt -f 1000 -n 20 -o ./HiCORE_out -t 10 ```
 ## Output data
 
 ## Utils
