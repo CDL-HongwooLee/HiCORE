@@ -97,7 +97,7 @@ usage: hicBinning.py [-h] -i IF_FILE -g GENOMESIZEFILE -r RESFILE -f
                         process but require more memory."Low" process is
                         relatively slow but more stable
 
-
+```
 
 
 
