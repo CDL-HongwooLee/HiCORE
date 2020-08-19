@@ -43,7 +43,7 @@ Chr2	19698289
 Chr3	23459830
 Chr4	18585056
 Chr5	26975502
-...   ...
+...      ...
 ```
 
 #### Genome digestion file
