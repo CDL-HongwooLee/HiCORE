@@ -55,12 +55,61 @@ Chr2 1576 1941 2036 2499 2809 3119 ...
 ```
 
 ## Run HiCORE
+#### Whole procedure :
+
 ```Multiple layers of binning - Identification of chromatin loops (Fit-HiC2 or other applications) - Overlap & Expand looping regions```
+
 HiCORE pipeline is composed of two python codes, hicBinning.py and HiCORE.py. The ```hicBinning.py``` contain codes of multi-fragments binning and processing to Fit-HiC2 input files. The ```HiCORE.py``` contain codes of identifying overlapped & expanded regions of chromatin loop.
  
 #### hicBinning.py
 Using the genomic structure files (‘chrom.sizes’ file and ‘genome digestion’ file), ```hicBinning.py``` generates multiple layers of multi-fragment binning files in ‘.bed’ formats. Then, the matrix file is assigned to each binning layer and further processed to format of ‘fragments’ and ‘interaction’ files, which are necessary for Fit-HiC2.
 
+```
+usage: hicBinning.py [-h] -i IF_FILE -g GENOMESIZEFILE -r RESFILE -f
+                     MIN_LENGTH [-n BINNING_NUMBER]
+                     [-c [CHROMOSOMES [CHROMOSOMES ...]]] [-j HICORE_DIR]
+                     [-o OUTDIR] [-t THREAD] [-k STEP] [-m MEMORY]
+                     
+```
+
+  -i IF_FILE, --IF_file IF_FILE
+                        Dumped and converted single or multiple chromsomse(s)
+                        file
+  -g GENOMESIZEFILE, --chrom_sizes GENOMESIZEFILE
+                        path to chrom.sizes file
+  -r RESFILE, --restriction_file RESFILE
+                        path to genome digestion file, space delimited
+                        position file
+  -f MIN_LENGTH, --min_fragLength MIN_LENGTH
+                        The cut-off bin size. restriction fragments below the
+                        cut-off size will be merged with neighbouring
+                        fragments
+  -n BINNING_NUMBER, --bin_num BINNING_NUMBER
+                        number of layers used in overlap. if n<=2 forward-
+                        reverse binning strategy will be applied. n>3 add
+                        randomly merged bin (n-2) times
+  -c [CHROMOSOMES [CHROMOSOMES ...]], --chromosomes [CHROMOSOMES [CHROMOSOMES ...]]
+                        comma-separated chromosome names, or "all"
+  -j HICORE_DIR, --HiCORE_dir HICORE_DIR
+                        HiCORE directory path including HiCORE.py script files
+  -o OUTDIR, --output_dir OUTDIR
+                        path to output directory
+  -t THREAD, --thread THREAD
+                        number of threads, when t>=n, running time is
+                        remarkably reduced but memory-intensive
+  -k STEP, --step STEP  One of ["all","BinningOnly","AfterBinning"]
+                        "BinningOnly" : Only For-Rev + Random binning process
+                        will be performed, bed files will be provided.
+                        "AfterBinning" : Resume the process after random-
+                        binning completed, all layers in tmp directory will be
+                        used for HiCORE analysis
+  -m MEMORY, --memory MEMORY
+                        type "High" or "Low". "High" means relatively fast
+                        process but require more memory."Low" process is
+                        relatively slow but more stable
+
+
+```
 #### HiCORE.py
 
 ## Output data
