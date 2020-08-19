@@ -66,39 +66,30 @@ Using the genomic structure files (‘chrom.sizes’ file and ‘genome digestio
 
 
 ```
-usage: hicBinning.py [-h] -i IF_FILE -g GENOMESIZEFILE -r RESFILE -f
-                     MIN_LENGTH [-n BINNING_NUMBER]
-                     [-c [CHROMOSOMES [CHROMOSOMES ...]]] [-j HICORE_DIR]
-                     [-o OUTDIR] [-t THREAD] [-k STEP] [-m MEMORY]
-                     
+usage: hicBinning.py [-h] -i IF_FILE -g GENOMESIZEFILE -r RESFILE -f MIN_LENGTH 
+                     [-n BINNING_NUMBER] [-c [CHROMOSOMES [CHROMOSOMES ...]]] 
+                     [-j HICORE_DIR] [-o OUTDIR] [-t THREAD] [-k STEP] [-m MEMORY]
 
   -i INTERACTION_MATRIX
                         A HiC interaction matrix including single or multiple chromosome(s) interaction data. 
   -g GENOMESIZEFILE     path to chrom.sizes file
   -r RESTRICTIONFILE    path to genome digestion file, space-delimited position file.
   -f MIN_FRAGLENGTH     The cut-off bin size. restriction fragments below the
-                        cut-off size will be merged with neighbouring
-                        fragments
+                        cut-off size will be merged with neighbouring fragments
   -n BINNING_NUMBER     number of layers for HiCORE. if n<=2, only forward-reverse binning strategy will be applied. 
-                        n>3 add randomly merged bin (n-2) times
+                        n>3, add randomly merged bin (n-2) times.
   -c [CHROMOSOMES [CHROMOSOMES ...]]
                         comma-separated chromosome names, or "all"
-  -j HICORE_DIR         HiCORE directory path including HiCORE.py script files
-  -o OUTDIR             path to output directory
-  -t THREAD             number of threads, when t>=n, running time is
-                        remarkably reduced but memory-intensive
-  -k STEP               Must be one of ["all","BinningOnly","AfterBinning"]
-                        BinningOnly : Only For-Rev + Random binning process
-                        will be performed, bed files will be provided.
-                        AfterBinning : Resume the process after random-
-                        binning completed, all layers in tmp directory will be
-                        used for HiCORE analysis
-  -m MEMORY             One of "High" or "Low". "High" means relatively fast
-                        process but require more memory."Low" process is
-                        relatively slow but more stable
+  -j HICORE_DIR         HiCORE directory path including HiCORE.py script files.  
+  -o OUTDIR             path to output directory.  
+  -t THREAD             number of threads, when t>=n, running time is remarkably reduced but memory-intensive.  
+  -k STEP               Must be one of ["all","BinningOnly","AfterBinning"]  
+                        BinningOnly : Only For-Rev + Random binning process will be performed, bed files will be provided.  
+                        AfterBinning : Resume the process after random-binning completed, all layers in tmp directory will be used for HiCORE analysis.  
+  -m MEMORY             One of "High" or "Low". "High" means relatively fast process but require more memory.  
+                        "Low" process is relatively slow but more stable.  
 
 ```
-
 
 
 #### HiCORE.py
