@@ -85,7 +85,8 @@ usage: hicBinning.py [-h] -i IF_FILE -g GENOMESIZEFILE -r RESFILE -f MIN_LENGTH
   -t THREAD             number of threads, when t>=n, running time is remarkably reduced but memory-intensive.  
   -k STEP               Must be one of ["all","BinningOnly","AfterBinning"]  
                         BinningOnly : Only For-Rev + Random binning process will be performed, bed files will be provided.  
-                        AfterBinning : Resume the process after random-binning completed, all layers in tmp directory will be used for HiCORE analysis.  
+                        AfterBinning : Resume the process after random-binning completed, 
+                                       all layers in tmp directory will be used for HiCORE analysis.  
   -m MEMORY             One of "High" or "Low". "High" means relatively fast process but require more memory.  
                         "Low" process is relatively slow but more stable.  
 
