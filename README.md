@@ -57,7 +57,9 @@ Chr2 1576 1941 2036 2499 2809 3119 ...
 ## Run HiCORE
 ### Whole procedure :
 
-```Multi-layers & multi-fragments binning - Identification of chromatin loops (Fit-HiC2 or other applications) - Overlap & Expand looping regions```
+```
+Multi-layers & multi-fragments binning - Identification of chromatin loops (Fit-HiC2 or other applications) - Overlap & Expand looping regions
+```
 
 HiCORE pipeline is composed of two python codes, hicBinning.py and HiCORE.py. The ```hicBinning.py``` contain codes of multi-fragments binning and processing to Fit-HiC2 input files. The ```HiCORE.py``` contain codes of identifying overlapped & expanded regions of chromatin loop.
  
@@ -160,7 +162,6 @@ Chr1    5573    6243    3263    1
 ### Overlap & Expand looping regions
 
 
-## Output data
 
 ## Utils
 #### mergeDump.py
