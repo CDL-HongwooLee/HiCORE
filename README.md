@@ -43,7 +43,7 @@ Chr2	19698289
 Chr3	23459830
 Chr4	18585056
 Chr5	26975502
-...      ...
+...     ...
 ```
 
 #### Genome digestion file
@@ -55,7 +55,12 @@ Chr2 1576 1941 2036 2499 2809 3119 ...
 ```
 
 ## Run HiCORE
+```Multiple layers of binning - Identification of chromatin loops (Fit-HiC2 or other applications) - Overlap & Expand looping regions```
+HiCORE pipeline is composed of two python codes, hicBinning.py and HiCORE.py. The ```hicBinning.py``` contain codes of multi-fragments binning and processing to Fit-HiC2 input files. The ```HiCORE.py``` contain codes of identifying overlapped & expanded regions of chromatin loop.
+ 
 #### hicBinning.py
+Using the genomic structure files (‘chrom.sizes’ file and ‘genome digestion’ file), ```hicBinning.py``` generates multiple layers of multi-fragment binning files in ‘.bed’ formats. Then, the matrix file is assigned to each binning layer and further processed to format of ‘fragments’ and ‘interaction’ files, which are necessary for Fit-HiC2.
+
 #### HiCORE.py
 
 ## Output data
