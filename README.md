@@ -14,7 +14,10 @@ Fit-HiC2
 Juicer
 
 ## Installation
-Github
+Github Install
+...
+git clone ******
+...
 
 ## Input data
 #### Matrix file
