@@ -65,6 +65,7 @@ HiCORE pipeline is composed of two python codes, hicBinning.py and HiCORE.py. Th
 
 Using the genomic structure files (‘chrom.sizes’ file and ‘genome digestion’ file), ```hicBinning.py``` generates multiple layers of multi-fragment binning files in ‘.bed’ formats. Then, the matrix file is assigned to each binning layer and further processed to format of ‘fragments’ and ‘interaction’ files, which are necessary for Fit-HiC2.
 
+#### Usage
 
 ```
 usage: hicBinning.py [-h] -i IF_FILE -g GENOMESIZEFILE -r RESFILE -f MIN_LENGTH 
@@ -97,13 +98,72 @@ Optional arguments:
                         "Low" process is relatively slow but more stable. (default : "Low")
 
 ```
+#### Output files
 
-#### Examples
+##### .bed file
+
+Each layer of output bed files are composed of chromosome names, start position, end position and bin-numbers.  
+Several fragments are merged to single bin. Bed files are generated in the 'out_dir/tmp' directory
+
+```
+Chr1    0       1319    1
+Chr1    1319    3545    2
+Chr1    3545    4555    3
+Chr1    4555    5573    4
+Chr1    5573    6913    5
+```
+
+##### overlap_bin.bed file
+
+Each layer of output overlap_bin.bed files are composed of chromosome names, start position, end position and overlapped bin-numbers.
+Unlike '.bed file', every single fragment is displayed with overlapped bin-numbers. The fragments that merged into a single bin have same bin numbers.
+
+```
+Chr1    0       311     1
+Chr1    311     901     1
+Chr1    901     1319    1
+Chr1    1319    1407    2
+Chr1    1407    1804    2
+Chr1    1804    3545    2
+Chr1    3545    3704    3
+Chr1    3704    3766    3
+Chr1    3766    3895    3
+Chr1    3895    4555    3
+Chr1    4555    4645    4
+Chr1    4645    4734    4
+Chr1    4734    4827    4
+Chr1    4827    5024    4
+Chr1    5024    5088    4
+Chr1    5088    5489    4
+Chr1    5489    5573    4
+```
+
+##### interaction & fragments file
+These files are compatible directly with Fit-HiC2.
+If you want to use the normalized matrix, you can generate 'bias' vector using 'HiCKRy.py' in Fit-HiC2 packages.
+
+interaction files (gzipped)
+```
+Chr1    659     Chr1    659     123
+Chr1    659     Chr1    2432    30
+Chr1    659     Chr1    4050    13
+Chr1    659     Chr1    5064    16
+Chr1    659     Chr1    6243    10
+```
+fragments files (gzipped
+```
+Chr1    0       659     641     1
+Chr1    1319    2432    1304    1
+Chr1    3545    4050    3093    1
+Chr1    4555    5064    3826    1
+Chr1    5573    6243    3263    1
+```
+
+### Overlap & Expand looping regions
+
+#### Example run
 
 ```python3 hicBinning.py -i ./Interaction_Matrix.txt -g ./reference/hg19.chrom.sizes -r ./reference/hg19_DpnII.txt -f 1000 -n 20 -o ./HiCORE_out -t 10 ```
-
-#### HiCORE.py
-
 ## Output data
 
 ## Utils
