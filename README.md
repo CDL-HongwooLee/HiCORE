@@ -78,7 +78,7 @@ Optional arguments:
 ### Input data
 HiCORE accepts a fragment unit matrix file as an input file. For the analysis, HiCORE needs additional files, ‘chrom.sizes’ and ‘genome digestion’ files, which provide information of genome structure.
 
-#### Matrix file
+##### Matrix file
 The fragment unit matrix file is composed of 3 columns including fragment1, fragment2, interaction-frequency information.
 The column 1 and 2 represent that the order of (Nth) restriction fragment in given chromosomes. If multiple chromosomes data are used, the fragment number of the next chromosome is continuing from the last fragment number of the preceding chromosome.
 ```
@@ -91,7 +91,7 @@ The column 1 and 2 represent that the order of (Nth) restriction fragment in giv
 ...
 ```
 
-#### Chrom.sizes file
+##### Chrom.sizes file
 The ‘chrom.sizes’ file consists of 2 columns (tab-delimited), including chromosome names and chromosome sizes.
 ```
 Chr1	30427671
@@ -110,7 +110,7 @@ Chr2 1576 1941 2036 2499 2809 3119 ...
 ...
 ```
 
-#### Output files
+### Output files
 
 ##### .bed file
 
@@ -168,7 +168,7 @@ Chr1    5573    6243    3263    1
 ...
 ```
 
-### Overlap & Expand looping regions
+## Overlap & Expand looping regions
 
 ```
 usage: HiCORE.py [-h] -l LOOP_LIST -b BED_LIST -o OVERLAPBED_LIST 
@@ -199,11 +199,11 @@ Optional arguments:
   -h, --help           show this help message and exit
 ```
 
-#### Example run
+### Example run
 
 ```python3 /home/HiCORE/HiCORE.py -i ./loop_list.txt -b ./bed_list.txt -o ./overlapbed_list.txt -p Layer10 -n 10 -e 0 -d ./ ```
 
-#### Input data
+### Input data
 
 ##### loop_list file
 ```
@@ -233,10 +233,10 @@ tmp/Random3_merged1000.overlap_bin.bed
 ...
 ```
 
-#### Output data
+### Output data
 
-### Utils
-#### dumpMatrix.py
+## Utils
+### dumpMatrix.py
 ```dumpMatrix.py``` extract intra-chromosomal fragment matrices from a '.hic' file and merge them into a single matrix.
 The code uses the Dump command of juicer packages and in-house script for merge each chromosome data.
 
@@ -253,7 +253,7 @@ usage: dumpMatrix.py [-h] -i HICFILE -g GENOMESIZEFILE -b BEDFILE -j JUICERDIR
                         space-delimited specific chromosomes or "all" in chrom.sizes file (default: "all")
 ```
 
-#### make1f_bed.py
+### make1f_bed.py
 ```make1f_bed.py``` makes a single restriction unit bed file which are required for dumpMatrix.py code.
 ```
 usage: make1f_bed.py [-h] -g GENOMESIZEFILE -r RESTRICTIONFILE
@@ -268,7 +268,7 @@ usage: make1f_bed.py [-h] -g GENOMESIZEFILE -r RESTRICTIONFILE
 
 ```
 
-#### makeRandomBin.py
+### makeRandomBin.py
 ```makeRandomBin.py``` is involoved in ```hicBinning.py``` script for making multi-layers & multi-fragments bed files.
 ```
 usage: makeRandomBin.py [-h] -c GENOMESIZEFILE -f RESTRICTIONFILE -u UNITBED
