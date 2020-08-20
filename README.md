@@ -88,7 +88,7 @@ The column 1 and 2 represent that the order of (Nth) restriction fragment in giv
 3       4       8.0
 1       5       1.0
 2       5       4.0
-...     ...     ...
+...
 ```
 
 ##### Chrom.sizes file
@@ -99,7 +99,7 @@ Chr2	19698289
 Chr3	23459830
 Chr4	18585056
 Chr5	26975502
-...     ...
+...
 ```
 
 ##### Genome digestion file
@@ -235,7 +235,7 @@ tmp/Random3_merged1000.overlap_bin.bed
 
 #### Output data
 
-## Utils
+### Utils
 #### dumpMatrix.py
 ```dumpMatrix.py``` extract intra-chromosomal fragment matrices from a '.hic' file and merge them into a single matrix.
 The code uses the Dump command of juicer packages and in-house script for merge each chromosome data.
