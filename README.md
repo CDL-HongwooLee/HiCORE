@@ -20,8 +20,8 @@ git clone ******
 ```
 
 
-## Run HiCORE
-### Whole procedure :
+# Run HiCORE
+## Whole procedure :
 
    1. Multi-layers & multi-fragments binning **__HiCORE__
 
@@ -32,11 +32,11 @@ git clone ******
 HiCORE pipeline is composed of two python codes, hicBinning.py and HiCORE.py. The ```hicBinning.py``` contain codes of multi-fragments binning and processing to Fit-HiC2 input files. The ```HiCORE.py``` contain codes of identifying overlapped & expanded regions of chromatin loop.
  
  
-### Multi-layers & multi-fragments binning
+## Multi-layers & multi-fragments binning
 
 Using the genomic structure files (‘chrom.sizes’ file and ‘genome digestion’ file), ```hicBinning.py``` generates multiple layers of multi-fragment binning files in ‘.bed’ formats. Then, the matrix file is assigned to each binning layer and further processed to format of ‘fragments’ and ‘interaction’ files, which are necessary for Fit-HiC2.
 
-#### Usage
+### Usage
 
 ```
 usage: hicBinning.py [-h] -i IF_FILE -g GENOMESIZEFILE -r RESFILE -f MIN_LENGTH 
@@ -71,14 +71,14 @@ Optional arguments:
   
 ```
 
-#### Example run
+### Example run
 
 ```python3 hicBinning.py -i ./Interaction_Matrix.txt -g ./reference/hg19.chrom.sizes -r ./reference/hg19_DpnII.txt -f 1000 -n 20 -o ./HiCORE_out -t 10 ```
 
-#### Input data
+### Input data
 HiCORE accepts a fragment unit matrix file as an input file. For the analysis, HiCORE needs additional files, ‘chrom.sizes’ and ‘genome digestion’ files, which provide information of genome structure.
 
-##### Matrix file
+#### Matrix file
 The fragment unit matrix file is composed of 3 columns including fragment1, fragment2, interaction-frequency information.
 The column 1 and 2 represent that the order of (Nth) restriction fragment in given chromosomes. If multiple chromosomes data are used, the fragment number of the next chromosome is continuing from the last fragment number of the preceding chromosome.
 ```
@@ -91,7 +91,7 @@ The column 1 and 2 represent that the order of (Nth) restriction fragment in giv
 ...
 ```
 
-##### Chrom.sizes file
+#### Chrom.sizes file
 The ‘chrom.sizes’ file consists of 2 columns (tab-delimited), including chromosome names and chromosome sizes.
 ```
 Chr1	30427671
