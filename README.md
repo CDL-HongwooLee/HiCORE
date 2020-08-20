@@ -20,7 +20,7 @@ git clone ******
 ```
 
 
-# Run HiCORE
+# Quick Start
 ## Whole procedure :
 
    1. Multi-layers & multi-fragments binning **__HiCORE__
