@@ -234,6 +234,15 @@ tmp/Random3_merged1000.overlap_bin.bed
 ```
 
 ### Output data
+The output files are composed of overlapped/expanded looping regions (first 6 columns) and original looping regions (last 6 columns).
+The overlapped/expanded looping regions are re-assembled to multi-fragments bin, located at the first layer of the loop_list file.
+```
+Chr1    3766    3895    Chr1    20066   21081   Chr1    3545    4555    Chr1    19737   21081
+Chr1    3766    3895    Chr1    21081   21206   Chr1    3545    4555    Chr1    21081   22236
+Chr1    3766    3895    Chr1    23699   24691   Chr1    3545    4555    Chr1    23597   24691
+Chr1    3766    3895    Chr1    27471   28274   Chr1    3545    4555    Chr1    27471   29385
+Chr1    3766    4555    Chr1    7508    8037    Chr1    3545    4555    Chr1    6913    8037
+```
 
 ## Utils
 ### dumpMatrix.py
