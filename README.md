@@ -8,11 +8,11 @@ HiCORE was designed to define core interacting regions with higher resolution by
 For any question about HiCORE, please contact miso5103@snu.ac.kr.
 
 ## Dependencies
-python3  
-subprocess  
-multiprocessing  
-Fit-HiC2  
-Juicer  
+python3 >=3.7.
+subprocess 
+multiprocessing 
+Fit-HiC2 packages >= 2.0.7
+Juicer pacakges (juicer_tools >= 1.13.02)
 
 ## Installation
 Github Install
