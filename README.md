@@ -23,13 +23,13 @@ git clone ******
 # Quick Start
 ## Whole procedure :
 
-   1. Multi-layers & multi-fragments binning **__HiCORE__
+   1. Multi-layers & multi-fragments binning ----------------------------__HiCORE__
 
    2. Identification of chromatin loops (Fit-HiC2 or other applications) 
    
-   3. Overlap & Expand looping regions **__HiCORE__
+   3. Overlap & Expand looping regions ----------------------------------__HiCORE__
 
-HiCORE pipeline is composed of two python codes, hicBinning.py and HiCORE.py. The ```hicBinning.py``` contain codes of multi-fragments binning and processing to Fit-HiC2 input files. The ```HiCORE.py``` contain codes of identifying overlapped & expanded regions of chromatin loop.
+HiCORE pipeline is composed of two python codes, ```hicBinning.py``` and ```HiCORE.py.``` The ```hicBinning.py``` contain codes of multi-fragments binning and processing to Fit-HiC2 input files. The ```HiCORE.py``` contain codes of identifying overlapped & expanded regions of chromatin loop.
  
  
 ## Multi-layers & multi-fragments binning
