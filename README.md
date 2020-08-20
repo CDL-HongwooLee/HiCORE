@@ -257,7 +257,7 @@ usage: dumpMatrix.py [-h] -i HICFILE -g GENOMESIZEFILE -b BEDFILE -j JUICERDIR
   -i HICFILE            input hic file path 
   -g GENOMESIZEFILE     path to chrom.sizes file 
   -b BEDFILE            1f resolution bed file, made by make_1fbed.py
-  -j JUICERDIR          juicer_tools.jar file path 
+  -j JUICERTOOLS        path to juicer_tools.jar file
   -o OUTDIR             dump output file directory (default: ./)
   -c [CHROMOSOMES [CHROMOSOMES ...]]
                         space-delimited specific chromosomes or "all" in chrom.sizes file (default: "all")
@@ -273,7 +273,8 @@ usage: make1f_bed.py [-h] -g GENOMESIZEFILE -r RESTRICTIONFILE
   -r RESTRICTIONFILE    path to wholegenome digestion file, space delimited
                         position file
   -c [CHROMOSOMES [CHROMOSOMES ...]]
-                        comma-separated chromosome names, or "all" (default: "all")
+                        space-separated chromosome names, or "all" (default: "all")
+                        chromosome names must be mathced with the name in the genome size file.
   -o OUTDIR             path to output directory (default: ./)
 
 ```
