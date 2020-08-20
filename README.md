@@ -16,7 +16,7 @@ Juicer
 ## Installation
 Github Install
 ```
-git clone ******
+git clone https://github.com/CDL-HongwooLee/HiCORE.git
 ```
 
 
