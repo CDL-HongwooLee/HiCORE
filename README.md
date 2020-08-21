@@ -58,7 +58,7 @@ Optional arguments:
   -n BINNING_NUMBER     number of layers for HiCORE. if n<=2, only forward-reverse binning strategy will be applied. 
                         n>3, add randomly merged bin (n-2) times. (default : 2)
   -c [CHROMOSOMES [CHROMOSOMES ...]]
-                        comma-separated chromosome names, or "all". (default : "all")
+                        space-separated chromosome names, or "all". (default : "all")
   -j HICORE_DIR         HiCORE directory path including HiCORE.py script files. (default : "./")
   -o OUTDIR             path to output directory. (default : "./")
   -t THREAD             number of threads, when t>=n, running time is remarkably reduced but memory-intensive. (default : 1)
@@ -66,7 +66,7 @@ Optional arguments:
                         BinningOnly : Only For-Rev + Random binning process will be performed, bed files will be provided.  
                         AfterBinning : Resume the process after random-binning completed, 
                                        all layers in tmp directory will be used for HiCORE analysis. (default : "all")
-  -m MEMORY             One of "High" or "Low". "High" means relatively fast process but require more memory.  
+  -m MEMORY             One of "High" or "Low". "High" means relatively fast process but require more memories.  
                         "Low" process is relatively slow but more stable. (default : "Low")
   -h, --help           show this help message and exit
   
@@ -286,7 +286,7 @@ usage: makeRandomBin.py [-h] -c GENOMESIZEFILE -f RESTRICTIONFILE -u UNITBED
                         -m MINFRAGLENGTH [-n RANDOMLAYERNUM] [-o OUTDIR]
                         [-t THREAD]
 
-  -c GENOMESIZEFILE   path to chrom.sizes file 
+  -g GENOMESIZEFILE   path to chrom.sizes file 
   -f RESTRICTIONFILE  path to chrom.sizes file 
   -u UNITBED          a single fragment resolution bed file. "make1f_bed.py"
                       can make this file. 
