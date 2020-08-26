@@ -31,8 +31,8 @@ git clone https://github.com/CDL-HongwooLee/HiCORE.git
 
 HiCORE pipeline is composed of two python codes, ```hicBinning.py``` and ```HiCORE.py```.  
    
-   ```hicBinning.py``` generates multiple layers of multi-fragment bin-arrays and processes the matrix file into Fit-HiC2 input files.   
-   ```HiCORE.py``` identifies overlapped & expanded interacting fragments from multiple layers of chromatin loop files.
+      ```hicBinning.py``` generates multiple layers of multi-fragment bin-arrays and processes the matrix file into Fit-HiC2 input files.   
+      ```HiCORE.py``` identifies overlapped & expanded interacting fragments from multiple layers of chromatin loop files.
  
  
 ## Multi-layer & multi-fragment binning - hicBinning.py
