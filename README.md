@@ -23,7 +23,7 @@ git clone https://github.com/CDL-HongwooLee/HiCORE.git
 # Quick Start
 ## Whole procedure :
 
-   1. __Multi-layers & multi-fragments binning ---------------------------- HiCORE__
+   1. __Multi-layer & multi-fragment binning ---------------------------- HiCORE__
 
    2. Identification of chromatin loops (Fit-HiC2 or other applications) 
    
@@ -31,13 +31,13 @@ git clone https://github.com/CDL-HongwooLee/HiCORE.git
 
 HiCORE pipeline is composed of two python codes, ```hicBinning.py``` and ```HiCORE.py```.  
    
-   ```hicBinning.py``` generates multiple layers of multi-fragments bin-arrays and processes the matrix file into Fit-HiC2 input files. 
+   ```hicBinning.py``` generates multiple layers of multi-fragment bin-arrays and processes the matrix file into Fit-HiC2 input files. 
    ```HiCORE.py``` identifies overlapped & expanded interacting fragments from multiple layers of chromatin loop files.
  
  
-## Multi-layers & multi-fragments binning - hicBinning.py
+## Multi-layer & multi-fragment binning - hicBinning.py
 
-Using the genomic structure files (‘chrom.sizes’ file and ‘genome digestion’ file), ```hicBinning.py``` generates multiple layers of multi-fragments bin-arrays files in ‘.bed’ formats. Then, the matrix file is assigned to each layer and further processed to format of ‘fragments’ and ‘interaction’ files, which are necessary for Fit-HiC2.
+Using the genomic structure files (‘chrom.sizes’ file and ‘genome digestion’ file), ```hicBinning.py``` generates multiple layers of multi-fragment bin-arrays files in ‘.bed’ formats. Then, the matrix file is assigned to each layer and further processed to format of ‘fragments’ and ‘interaction’ files, which are necessary for Fit-HiC2.
 
 ### Usage
 
@@ -109,7 +109,7 @@ Chr5	26975502
 ```
 
 ##### Genome digestion file
-The ‘genome digestion’ file includes chromosome name and every restriction fragment position of each chromosome in a single raw. Each component of line is space-delimited and the first component indicates a chromosome name. The ‘genome digestion’ file can easily be made by ‘generate_site_position.py’ python code in Juicer packages. (****)
+The ‘genome digestion’ file includes chromosome name and every restriction fragment position of each chromosome in a single raw. Each component of line is space-delimited and the first component indicates a chromosome name. The ‘genome digestion’ file can easily be made by ‘generate_site_position.py’ python code in Juicer packages. 
 ```
 Chr1 311 901 1319 1407 1804 3545 ...  
 Chr2 1576 1941 2036 2499 2809 3119 ...
@@ -121,7 +121,7 @@ Chr2 1576 1941 2036 2499 2809 3119 ...
 ##### .bed file
 
 Each layer of output bed files are composed of chromosome names, start position, end position and bin-numbers.  
-Several fragments are merged to single bin. Bed files are generated in the 'out_dir/tmp' directory
+Several fragments are merged to a single bin. Bed files are generated in the 'out_dir/tmp' directory
 
 ```
 Chr1    0       1319    1
@@ -176,7 +176,7 @@ Chr1    5573    6243    3263    1
 
 ## Overlap & Expand looping regions -- HiCORE.py
 Using the multiple layers of multi-fragment resolution chromatin loop files, HiCORE provides overlapped & expanded interacting fragments.
-When N layers are given, HiCORE analyzes overlapped fragments with increasing layers from the 1 to N. 
+When N layers are given, from 1st layer to Kth layer are analyzed. (K=1,2 ... N-1,N | N >= K)
 
 ### usage
 
