@@ -197,7 +197,7 @@ Optional arguments:
   -d OUTPUT_DIR        output directory
   -t THREADS           number of threads, when thread >= layers, running time
                        is remarkably reduced. (default = 1)
-  -h, --help           show this help message and exit
+  -h, --help           show this help message and exit (default = './')
 ```
 
 ### Example run
