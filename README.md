@@ -9,8 +9,8 @@ For any question about HiCORE, please contact miso5103@snu.ac.kr.
 
 ## Dependencies
 python3 >=3.7.  
-Fit-HiC2 packages >= 2.0.7  
-Juicer pacakges (juicer_tools >= 1.13.02)  
+Fit-HiC2 packages >= 2.0.7 (https://github.com/ay-lab/fithic)
+Juicer pacakges (juicer_tools >= 1.13.02) (https://github.com/aidenlab/juicer/wiki)
 subprocess, multiprocessing  
 
 ## Installation
