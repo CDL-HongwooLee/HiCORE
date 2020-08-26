@@ -1,5 +1,5 @@
 # HiCORE
-HiCORE was designed to define high resolution of core interacting fragment(s) with the advanced binning strategy.  
+HiCORE was designed to define high-resolution core interacting fragments with our advanced binning strategy.  
 
 
 ![image](https://user-images.githubusercontent.com/69840555/90509331-1f9cca80-e194-11ea-91bb-a3f1b913bfd9.png)
@@ -31,7 +31,7 @@ git clone https://github.com/CDL-HongwooLee/HiCORE.git
 
 HiCORE pipeline is composed of two python codes, ```hicBinning.py``` and ```HiCORE.py```.  
    
-   ```hicBinning.py``` generates multiple layers of multi-fragment bin-arrays and processes the matrix file into Fit-HiC2 input files. 
+   ```hicBinning.py``` generates multiple layers of multi-fragment bin-arrays and processes the matrix file into Fit-HiC2 input files.   
    ```HiCORE.py``` identifies overlapped & expanded interacting fragments from multiple layers of chromatin loop files.
  
  
@@ -83,7 +83,7 @@ HiCORE accepts a fragment unit matrix file as an input file. For the analysis, H
 
 ##### Matrix file
 The single fragment resolution of matrix file is composed of 3 columns including fragment1, fragment2, interaction-frequency information.
-The column 1 and 2 represent that the order of (Nth) restriction fragment in given chromosomes. If multiple chromosomes data are used, the fragment number of the next chromosome is continuing from the last fragment number of the preceding chromosome. You can easily get the matrix file from a '.hic' file using ```utils/dumpMatrix.py``` script.  
+The column 1 and 2 represent that the order of (Nth) restriction fragment in given chromosomes. If multiple-chromosome data are used, the fragment number of the next chromosome is continuing from the last fragment number of the preceding chromosome. You can easily get the matrix file from a '.hic' file using ```utils/dumpMatrix.py``` script.  
 
 **Note that chromosomes(-c option) used in all HiCORE scripts including utility scripts, must be identical**
 
@@ -120,7 +120,7 @@ Chr2 1576 1941 2036 2499 2809 3119 ...
 
 ##### .bed file
 
-Each layer of output bed files are composed of chromosome names, start position, end position and bin-numbers.  
+Each layer of output bed files is composed of chromosome name, start position, end position and bin-number.  
 Several fragments are merged to a single bin. Bed files are generated in the 'out_dir/tmp' directory
 
 ```
@@ -134,8 +134,8 @@ Chr1    5573    6913    5
 
 ##### overlap_bin.bed file
 
-Each layer of output overlap_bin.bed files are composed of chromosome names, start position, end position and overlapped bin-numbers.
-Unlike '.bed file', every single fragment is displayed with overlapped bin-numbers. The fragments that merged into a single bin have same bin numbers.
+Each layer of output overlap_bin.bed files is composed of chromosome name, start position, end position and overlapped bin-number.
+Unlike '.bed file', every single fragment is displayed with overlapped bin-number. The fragments that merged into a single bin have a same bin-number.
 
 ```
 Chr1    0       311     1
@@ -176,7 +176,7 @@ Chr1    5573    6243    3263    1
 
 ## Overlap & Expand looping regions -- HiCORE.py
 Using the multiple layers of multi-fragment resolution chromatin loop files, HiCORE provides overlapped & expanded interacting fragments.
-When N layers are given, from 1st layer to Kth layer are analyzed. (K=1,2 ... N-1,N | N >= K)
+When N layers are given, HiCORE performes analysis N times, adding layers one by one from the first layer to the Nth layer.
 
 ### usage
 
@@ -239,14 +239,15 @@ tmp/Random3_merged1000.overlap_bin.bed
 ```
 
 ### Output data
-With N number of output files, some recommendable layer-numbers are presented.
+With N number of output files, HiCORE presents recommendable layer-number and their average bin sizes.
 
-   First minima : The number of layers when the bin sizes are first minimum values.  
-   Minimum binSize : The number of layers which hava minimum average bin sizes.  
+   First minima : The layer-number when the bin sizes have first minimum values.  
+   Minimum binSize : The layer-number which hava minimum average bin sizes.  
    Whole layers : All given layers are used.  
    
-The output files are composed of overlapped/expanded looping regions (first 6 columns) and original looping regions (last 6 columns).
-The overlapped/expanded looping regions are re-assembled to multi-fragments bin, located at the first layer of the loop_list file.
+The single-fragment bin of overlapped/expanded interacting regions are re-assembled to multi-fragment bin, referring the top first layer of the loop_list file.
+The final output files consist of overlapped/expanded interacting regions (first 6 columns) and original interacting regions (last 6 columns, the loops at first layer).
+
 
 ```
 Chr1    3766    3895    Chr1    20066   21081   Chr1    3545    4555    Chr1    19737   21081
@@ -258,9 +259,9 @@ Chr1    3766    4555    Chr1    7508    8037    Chr1    3545    4555    Chr1    
 
 ## Utils
 ### dumpMatrix.py
-```dumpMatrix.py``` extract intra-chromosomal fragment matrices from a '.hic' file and merge them into a single matrix.
+```dumpMatrix.py``` extract intra-chromosomal fragment matrices from a '.hic' file and merge them into a matrix.
 The code uses the 'Dump command' of juicer packages and in-house script for merge each chromosome data.
-**the chromosome(s) must be equal to the one in ```make1f_bed.py```.**
+**the chromosome(s) (-c option) must be equal to the one used in ```make1f_bed.py```.**
 ```
 usage: dumpMatrix.py [-h] -i HICFILE -g GENOMESIZEFILE -b BEDFILE -j JUICERDIR
                      [-o OUTDIR] [-c [CHROMOSOMES [CHROMOSOMES ...]]]
