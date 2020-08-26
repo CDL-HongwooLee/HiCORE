@@ -23,11 +23,11 @@ git clone https://github.com/CDL-HongwooLee/HiCORE.git
 # Quick Start
 ## Whole procedure :
 
-   1. Multi-layers & multi-fragments binning ---------------------------- __HiCORE__
+   1. __Multi-layers & multi-fragments binning ---------------------------- HiCORE__
 
    2. Identification of chromatin loops (Fit-HiC2 or other applications) 
    
-   3. Overlap & Expand looping regions ---------------------------------- __HiCORE__
+   3. __Overlap & Expand looping regions ---------------------------------- HiCORE__
 
 HiCORE pipeline is composed of two python codes, ```hicBinning.py``` and ```HiCORE.py```.  
    
