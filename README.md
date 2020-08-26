@@ -245,7 +245,6 @@ With N number of output files, HiCORE presents recommendable layer-number and th
    Minimum binSize : The layer-number which hava minimum average bin sizes.  
    Whole layers : All given layers are used.  
    
-The single-fragment bin of overlapped/expanded interacting regions are re-assembled to multi-fragment bin, referring the top first layer of the loop_list file.
 The final output files consist of overlapped/expanded interacting regions (first 6 columns) and original interacting regions (last 6 columns, the loops at first layer).
 
 
@@ -260,8 +259,8 @@ Chr1    3766    4555    Chr1    7508    8037    Chr1    3545    4555    Chr1    
 ## Utils
 ### dumpMatrix.py
 ```dumpMatrix.py``` extract intra-chromosomal fragment matrices from a '.hic' file and merge them into a matrix.
-The code uses the 'Dump command' of juicer packages and in-house script for merge each chromosome data.
-**the chromosome(s) (-c option) must be equal to the one used in ```make1f_bed.py```.**
+The code uses the 'Dump command' of juicer packages and in-house script for merging each chromosome data.
+**the chromosome(s) (-c option) must be equal to the one used in** ```make1f_bed.py```.
 ```
 usage: dumpMatrix.py [-h] -i HICFILE -g GENOMESIZEFILE -b BEDFILE -j JUICERDIR
                      [-o OUTDIR] [-c [CHROMOSOMES [CHROMOSOMES ...]]]
@@ -276,7 +275,7 @@ usage: dumpMatrix.py [-h] -i HICFILE -g GENOMESIZEFILE -b BEDFILE -j JUICERDIR
 ```
 
 ### make1f_bed.py
-```make1f_bed.py``` makes a single restriction unit bed file which are required for dumpMatrix.py code.
+```make1f_bed.py``` makes a single-fragment unit bed file which is required for ```dumpMatrix.py``` code.
 ```
 usage: make1f_bed.py [-h] -g GENOMESIZEFILE -r RESTRICTIONFILE
                      [-c [CHROMOSOMES [CHROMOSOMES ...]]] [-o OUTDIR]
@@ -292,7 +291,7 @@ usage: make1f_bed.py [-h] -g GENOMESIZEFILE -r RESTRICTIONFILE
 ```
 
 ### makeRandomBin.py
-```makeRandomBin.py``` is involoved in ```hicBinning.py``` script for making multi-layers & multi-fragments bed files.
+```makeRandomBin.py``` is involoved in ```hicBinning.py``` script for making multi-layer & multi-fragment bed files.
 ```
 usage: makeRandomBin.py [-h] -c GENOMESIZEFILE -f RESTRICTIONFILE -u UNITBED
                         -m MINFRAGLENGTH [-n RANDOMLAYERNUM] [-o OUTDIR]
