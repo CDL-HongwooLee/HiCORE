@@ -83,7 +83,7 @@ HiCORE accepts a fragment unit matrix file as an input file. For the analysis, H
 
 ##### Matrix file
 The single fragment resolution of matrix file is composed of 3 columns including fragment1, fragment2, interaction-frequency information.
-The column 1 and 2 represent that the order of (Nth) restriction fragment in given chromosomes. If multiple-chromosome data are used, the fragment number of the next chromosome is continuing from the last fragment number of the preceding chromosome. You can easily get the matrix file from a '.hic' file using ```utils/dumpMatrix.py``` script.  
+The column 1 and 2 represent that the order of (Nth) restriction fragment in given chromosomes. If multiple-chromosome data are used, the fragment number of the next chromosome is continued from the last fragment number of the preceding chromosome. You can easily get the matrix file from a '.hic' file using ```utils/dumpMatrix.py``` script.  
 
 **Note that chromosomes(-c option) used in all HiCORE scripts including utility scripts, must be identical**
 
