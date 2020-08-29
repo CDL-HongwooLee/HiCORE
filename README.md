@@ -37,7 +37,7 @@ HiCORE pipeline is composed of two python codes, ```hicBinning.py``` and ```HiCO
  
 ## Multi-layer & multi-fragment binning - hicBinning.py
 
-Using the genomic structure files (‘chrom.sizes’ file and ‘genome digestion’ file), ```hicBinning.py``` generates multiple layers of multi-fragment bin-arrays files in ‘.bed’ formats. Then, the matrix file is assigned to each layer and further processed to format of ‘fragments’ and ‘interaction’ files, which are necessary for Fit-HiC2.
+Using the genomic structure files (‘chrom.sizes’ and ‘genome digestion’), ```hicBinning.py``` generates individual files for multiple binning layers in .bed format. The fragment matrix is assigned to a file for each binning layer. HiCORE generates ‘fragments’ and ‘interaction’ files, which are necessary for Fit-HiC2 analysis
 
 ### Usage
 
@@ -79,11 +79,10 @@ Optional arguments:
 ```python3 hicBinning.py -i ./Interaction_Matrix.txt -g ./reference/hg19.chrom.sizes -r ./reference/hg19_DpnII.txt -f 1000 -n 20 -o ./HiCORE_out -t 10 -c Chr1 ```
 
 ### Input data
-HiCORE accepts a fragment unit matrix file as an input file. For the analysis, HiCORE needs additional files, ‘chrom.sizes’ and ‘genome digestion’ files, which contain information of the genomic structure.
+As input files, HiCORE accepts a fragment unit matrix file. For the analysis, HiCORE needs additional files, ‘chrom.sizes’ and ‘genome digestion’ files, which provide information about genome structure. 
 
 ##### Matrix file
-The single fragment resolution of matrix file is composed of 3 columns including fragment1, fragment2, interaction-frequency information.
-The column 1 and 2 represent that the order of (Nth) restriction fragment in given chromosomes. If multiple-chromosome data are used, the fragment number of the next chromosome is continued from the last fragment number of the preceding chromosome. You can easily get the matrix file from a '.hic' file using ```utils/dumpMatrix.py``` script.  
+1.	The fragment unit matrix file is composed of three columns including fragment1 (Column 1), fragment2 (Column 2), and intra-chromosomal interaction frequency (Column 3). Columns 1 and 2 represent the order of (Nth) restriction fragments that are in 3D contact with each other in a given chromosome. For integration of multiple chromosome data, the fragment number of the next chromosome is continued from the last fragment number of the preceding chromosome. The interaction frequency is represented as an integer value of raw interaction counts. You can easily get the matrix file from a '.hic' file using ```utils/dumpMatrix.py``` script.  
 
 **Note that chromosomes(-c option) used in all HiCORE scripts including utility scripts, must be identical**
 
@@ -98,7 +97,7 @@ The column 1 and 2 represent that the order of (Nth) restriction fragment in giv
 ```
 
 ##### Chrom.sizes file
-The ‘chrom.sizes’ file consists of 2 columns (tab-delimited), including chromosome names and chromosome sizes.
+The ‘chrom.sizes’ file consists of 2 columns (tab-delimited): chromosome names and chromosome sizes.
 ```
 Chr1	30427671
 Chr2	19698289
@@ -109,7 +108,7 @@ Chr5	26975502
 ```
 
 ##### Genome digestion file
-The ‘genome digestion’ file includes chromosome name and every restriction fragment position of each chromosome in a single raw. Each component of line is space-delimited and the first component indicates a chromosome name. The ‘genome digestion’ file can easily be made by ‘generate_site_position.py’ python code in Juicer packages. 
+3.	The ‘genome digestion’ file includes chromosome name and genomic positions of all restriction fragments in each chromosome in a row. All data in a row are space-delimited, beginning with the chromosome name. The ‘genome digestion’ file can be made using the ‘generate_site_position.py’ Python code in the Juicer package.
 ```
 Chr1 311 901 1319 1407 1804 3545 ...  
 Chr2 1576 1941 2036 2499 2809 3119 ...
@@ -134,8 +133,8 @@ Chr1    5573    6913    5
 
 ##### overlap_bin.bed file
 
-Each layer of output overlap_bin.bed files is composed of chromosome name, start position, end position and overlapped bin-number.
-Unlike '.bed file', every single fragment is displayed with overlapped bin-number. The fragments that merged into a single bin have a same bin-number.
+Each layer of output overlap_bin.bed files is composed of chromosome name, start position, end position and 'overlapped bin-number'.
+Unlike the '.bed file', every single fragment is displayed with 'overlapped bin-number'. The fragments, merged into a single bin, have a same bin-number.
 
 ```
 Chr1    0       311     1
@@ -152,8 +151,7 @@ Chr1    3895    4555    3
 ```
 
 ##### interaction & fragments file
-These files are compatible directly with Fit-HiC2.
-If you want to use the normalized matrix, you can generate 'bias' vector using 'HiCKRy.py' in Fit-HiC2 packages.
+These files are compatible directly with Fit-HiC2. If you want to use the normalized matrix, you can generate 'bias' vector using 'HiCKRy.py' in Fit-HiC2 packages.
 
 interaction files (gzipped)
 ```
@@ -245,8 +243,7 @@ With N number of output files, HiCORE presents recommendable layer-number and th
    Minimum binSize : The layer-number which hava minimum average bin sizes.  
    Whole layers : All given layers are used.  
    
-The final output files consist of overlapped/expanded interacting regions (first 6 columns) and original interacting regions (last 6 columns, the loops at first layer).
-
+Final HiCORE output files contain information about chromatin looping regions, HiCORE-processed chromatin looping regions, and their corresponding original chromatin looping regions.
 
 ```
 Chr1    3766    3895    Chr1    20066   21081   Chr1    3545    4555    Chr1    19737   21081
