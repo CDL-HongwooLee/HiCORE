@@ -68,8 +68,6 @@ Optional arguments:
                         BinningOnly : Only For-Rev + Random binning process will be performed, bed files will be provided.  
                         AfterBinning : Resume the process after random-binning completed, 
                                        all layers in tmp directory will be used for HiCORE analysis. (default : "all")
-  -m MEMORY             One of "High" or "Low". "High" means relatively fast process but require more memories.  
-                        "Low" process is relatively slow but more stable. (default : "Low")
   -h, --help           show this help message and exit
   
 ```
@@ -259,14 +257,18 @@ Chr1    3766    4555    Chr1    7508    8037    Chr1    3545    4555    Chr1    
 The code uses the 'Dump command' of juicer packages and in-house script for merging each chromosome data.
 **the chromosome(s) (-c option) must be equal to the one used in** ```make1f_bed.py```.
 ```
-usage: dumpMatrix.py [-h] -i HICFILE -g GENOMESIZEFILE -b BEDFILE -j JUICERDIR
-                     [-o OUTDIR] [-c [CHROMOSOMES [CHROMOSOMES ...]]]
+usage: dumpMatrix.py [-h] -i HICFILE -g GENOMESIZEFILE -b BEDFILE -j
+                     JUICERTOOLS [-d OUTDIR] [-p PREFIX]
+                     [-c [CHROMOSOMES [CHROMOSOMES ...]]]
+
 
   -i HICFILE            input hic file path 
   -g GENOMESIZEFILE     path to chrom.sizes file 
   -b BEDFILE            1f resolution bed file, made by make_1fbed.py
   -j JUICERTOOLS        path to juicer_tools.jar file
-  -o OUTDIR             dump output file directory (default: ./)
+  -d OUTDIR             dump output file directory (default: ./)
+  -p PREFIX             output file name prefix, {prefix}.matrix.txt will be
+                        created (default: HiCORE_matrix)
   -c [CHROMOSOMES [CHROMOSOMES ...]]
                         space-delimited specific chromosomes or "all" in chrom.sizes file (default: "all")
 ```
