@@ -270,7 +270,7 @@ usage: dumpMatrix.py [-h] -i HICFILE -g GENOMESIZEFILE -b BEDFILE -j
   -p PREFIX             output file name prefix, {prefix}.matrix.txt will be
                         created (default: HiCORE_matrix)
   -c [CHROMOSOMES [CHROMOSOMES ...]]
-                        space-delimited specific chromosomes or "all" in chrom.sizes file (default: "all")
+                        space-delimited specific chromosomes or "all" for all in chrom.sizes file (default: "all")
 ```
 
 ### make1f_bed.py
