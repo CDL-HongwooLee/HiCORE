@@ -50,24 +50,26 @@ Required arguments:
 
   -i INTERACTION_MATRIX
                         A HiC interaction matrix including single or multiple chromosome(s) interaction data. 
-  -g GENOMESIZEFILE     path to chrom.sizes file
-  -r RESTRICTIONFILE    path to genome digestion file, space-delimited position file.
-  -f MIN_FRAGLENGTH     The cut-off bin size. restriction fragments below the
-                        cut-off size will be merged with neighbouring fragments
+  -g GENOMESIZEFILE     Path to chrom.sizes file
+  -r RESTRICTIONFILE    Path to genome digestion file, including chromosome name and restriction position in each raw.
+  -f MIN_FRAGLENGTH     The cut-ff bin size. Restriction fragments below the
+                        cut-off size will be merged with neighboring fragments
                         
 Optional arguments:
 
-  -n BINNING_NUMBER     number of layers for HiCORE. if n<=2, only forward-reverse binning strategy will be applied. 
-                        n>3, add randomly merged bin (n-2) times. (default : 2)
+  -n BINNING_NUMBER     Number of layers for HiCORE analysis. 
+                        (n<=2) : Only forward-reverse binning strategies will be applied. 
+                        (n>3) : Add randomly merged bin (n-2) times. 
+                        (default : 2)
   -c [CHROMOSOMES [CHROMOSOMES ...]]
-                        space-separated chromosome names, or "all". (default : "all")
-  -j HICORE_DIR         HiCORE directory path including HiCORE.py script files. (default : "./")
-  -o OUTDIR             path to output directory. (default : "./")
-  -t THREAD             number of threads, when t>=n, running time is remarkably reduced but memory-intensive. (default : 1)
+                        Space-separated chromosome names, or "all". (default : "all")
+  -j HICORE_DIR         HiCORE directory path including hicBinning.py, HiCORE.py script files. (default : "./")
+  -o OUTDIR             Path to output directory. (default : "./")
+  -t THREAD             Number of threads. If t>=n, running time is remarkably reduced but memory-intensive. (default : 1)
   -k STEP               Must be one of ["all","BinningOnly","AfterBinning"]  
-                        BinningOnly : Only For-Rev + Random binning process will be performed, bed files will be provided.  
-                        AfterBinning : Resume the process after random-binning completed, 
-                                       all layers in tmp directory will be used for HiCORE analysis. (default : "all")
+                        **BinningOnly : Only For-Rev + Random binning process will be performed, bed files will be provided.  
+                        **AfterBinning : Resume the process after random-binning completed. 
+                                         All layers in tmp directory will be used for HiCORE analysis. (default : "all")
   -h, --help           show this help message and exit
   
 ```
@@ -185,17 +187,16 @@ Required arguments:
   -l LOOP_LIST         loop list file cut by certain criteria, such as q<0.01.
                        Each file must include (chr1, bin1_start, bin2_start, chr2, chr2_start, chr2_end)
                        information in their first 6 columns.
-  -b BED_LIST          bed list file. The order of list must correct with loop list order. 
+  -b BED_LIST          ".bed" list file. The order of list must correct with loop list order. 
                        At default setting, bed files are generated in "out_dir/tmp" directory.
-  -o OVERLAPBED_LIST   overlap_bin.bed list file. The order of list must
-                       correct with loop list order. At default setting,
-                       overlap_bin.bed files are generated in "out_dir/tmp" directory.
-  -p PREFIX            output file name prefix.
+  -o OVERLAPBED_LIST   "overlap_bin.bed" list file. The order of list must correct with loop list order. 
+                       At default setting, "overlap_bin.bed" files are generated in "out_dir/tmp" directory.
+  -p PREFIX            Output file name prefix. Output file path = {out_dir}/{prefix}-{overlap/expand}.{layers}.HiCORE.txt
 
 Optional arguments:
 
-  -d OUTPUT_DIR        output directory
-  -t THREADS           number of threads, when thread >= layers, running time
+  -d OUTPUT_DIR        Path to output directory (default = "./")
+  -t THREADS           Number of threads. If thread >= layers, the running time
                        is remarkably reduced. (default = 1)
   -h, --help           show this help message and exit (default = './')
 ```
@@ -262,15 +263,15 @@ usage: dumpMatrix.py [-h] -i HICFILE -g GENOMESIZEFILE -b BEDFILE -j
                      [-c [CHROMOSOMES [CHROMOSOMES ...]]]
 
 
-  -i HICFILE            input hic file path 
-  -g GENOMESIZEFILE     path to chrom.sizes file 
-  -b BEDFILE            1f resolution bed file, made by make_1fbed.py
-  -j JUICERTOOLS        path to juicer_tools.jar file
-  -d OUTDIR             dump output file directory (default: ./)
-  -p PREFIX             output file name prefix, {prefix}.matrix.txt will be
-                        created (default: HiCORE_matrix)
+  -i HICFILE            Path to a input ".hic" file. 
+  -g GENOMESIZEFILE     Path to chr"om.sizes file" 
+  -b BEDFILE            1f resolution bed file, made by "make_1fbed.py"
+  -j JUICERTOOLS        Path to juicer_tools.jar file
+  -d OUTDIR             Output directory (default: ./)
+  -p PREFIX             Output file name prefix, {prefix}.matrix.txt will be
+                        created (default: HiCORE)
   -c [CHROMOSOMES [CHROMOSOMES ...]]
-                        space-delimited specific chromosomes or "all" for all in chrom.sizes file (default: "all")
+                        Space-delimited specific chromosomes or "all" for all in the chrom.sizes file (default: "all")
 ```
 
 ### make1f_bed.py
@@ -279,13 +280,12 @@ usage: dumpMatrix.py [-h] -i HICFILE -g GENOMESIZEFILE -b BEDFILE -j
 usage: make1f_bed.py [-h] -g GENOMESIZEFILE -r RESTRICTIONFILE
                      [-c [CHROMOSOMES [CHROMOSOMES ...]]] [-o OUTDIR]
 
-  -g GENOMESIZEFILE     path to chrom.sizes file
-  -r RESTRICTIONFILE    path to wholegenome digestion file, space delimited
-                        position file
+  -g GENOMESIZEFILE     Path to chrom.sizes file
+  -r RESTRICTIONFILE    Path to wholegenome digestion file, a space-delimited position file
   -c [CHROMOSOMES [CHROMOSOMES ...]]
-                        space-separated chromosome names, or "all" (default: "all")
+                        Space-separated chromosome names, or "all" for all in the chrom.sizes file (default: "all")
                         chromosome names must be mathced with the name in the genome size file.
-  -o OUTDIR             path to output directory (default: ./)
+  -o OUTDIR             Path to output directory (default: ./)
 
 ```
 
@@ -296,15 +296,15 @@ usage: makeRandomBin.py [-h] -c GENOMESIZEFILE -f RESTRICTIONFILE -u UNITBED
                         -m MINFRAGLENGTH [-n RANDOMLAYERNUM] [-o OUTDIR]
                         [-t THREAD]
 
-  -g GENOMESIZEFILE   path to chrom.sizes file 
-  -f RESTRICTIONFILE  path to chrom.sizes file 
-  -u UNITBED          a single fragment resolution bed file. "make1f_bed.py"
+  -g GENOMESIZEFILE   Path to chrom.sizes file 
+  -f RESTRICTIONFILE  Path to wholegenome digestion file, a space-delimited position file 
+  -u UNITBED          A single fragment resolution bed file. "make1f_bed.py"
                       can make this file. 
-  -m MINFRAGLENGTH    The cut-off bin size. restriction fragments below the
-                      cut-off size will be merged with neighbouring fragments
+  -m MINFRAGLENGTH    The cut-off bin size. Restriction fragments below the
+                      cut-off size will be merged with neighboring fragments
   -n RANDOMLAYERNUM   Number of random layers to make. (default: 2)
-  -o OUTDIR           path to output directory. (default: ./)
-  -t THREAD           number of threads, when t>=n, running time is remarkably
+  -o OUTDIR           Output directory. (default: ./)
+  -t THREAD           Number of threads. If t>=n, running time is remarkably
                       reduced but memory-intensive. (default: 1)
 
 ```
