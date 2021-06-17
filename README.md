@@ -2,8 +2,7 @@
 HiCORE was designed to define high-resolution core interacting fragments with our advanced binning strategy.  
 
 
-![image](https://user-images.githubusercontent.com/69840555/90509331-1f9cca80-e194-11ea-91bb-a3f1b913bfd9.png)
-
+![GitHub_figure](https://user-images.githubusercontent.com/69840555/122363934-513d1880-cf94-11eb-9cce-567fc3a6113d.png)
 
 For any question about HiCORE, please contact miso5103@snu.ac.kr.
 
