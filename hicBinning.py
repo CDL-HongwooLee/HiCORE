@@ -1,30 +1,45 @@
+#!/usr/bin/env python3
 import subprocess as sp
 import sys
 import argparse
 import os
 import multiprocessing
-import time
 
 ##usage
 parser = argparse.ArgumentParser(description = "", formatter_class = argparse.RawTextHelpFormatter)
-parser.add_argument('-i', dest = 'Interaction_matrix', required = True, help= 'A HiC interaction matrix including single or multiple chromosome(s) interaction data.')
-parser.add_argument('-g', dest = 'genomesizeFile', required=True, help = 'Path to chrom.sizes file')
-parser.add_argument('-r', dest = 'restrictionFile', required = True, help = 'Path to genome digestion file, including chromosome name and restriction position in each raw')
-parser.add_argument('-f', dest = 'minFraglength', required=True, type = int, help = 'The cutoff bin size. Restriction fragments below the cutoff size will be merged with neighboring fragments')
+parser.add_argument('-i', dest = 'Interaction_matrix', required = True, help= '''A HiC interaction matrix including single or multiple chromosome(s) interaction data.
+
+''')
+parser.add_argument('-g', dest = 'genomesizeFile', required=True, help = '''Path to chrom.sizes file
+
+''')
+parser.add_argument('-r', dest = 'restrictionFile', required = True, help = '''Path to genome digestion file, including chromosome name and restriction position in each raw
+
+''')
+parser.add_argument('-f', dest = 'minFraglength', required=True, type = int, help = '''The cutoff bin size. Restriction fragments below the cutoff size will be merged with neighboring fragments
+
+''')
 parser.add_argument('-n', dest = 'layerNumber', default = 2, type=int, help = 
-'''
-Number of layers used for HiCORE analysis.
+'''Number of layers used for HiCORE analysis.
 (n<=2) : Only forward-reverse binning strategies will be applied.  
 (n>2) : Add randomly merged bin (n-2) times.
 (default = 2)
+
 ''')
-parser.add_argument('-c', dest = 'chromosomes', default='all', nargs='*', help = 'Space-separated chromosome names, or "all". (default = "all")')
-parser.add_argument('-j', dest = 'HiCORE_dir', default = './', help = 'HiCORE directory path including hicBinning.py, HiCORE.py script files. (default = "./")')
-parser.add_argument('-o', dest = 'outdir', default = './', help = 'Path to output directory. (default = "./"')
-parser.add_argument('-t', dest = 'thread', default = 1, type=int, help = 'Number of threads. If t>=n, the running time is remarkably reduced but memory-intensive. (default = 1)')
+parser.add_argument('-c', dest = 'chromosomes', default='all', nargs='*', help = '''Space-separated chromosome names, or "all". (default = "all")
+
+''')
+parser.add_argument('-j', dest = 'HiCORE_dir', default = './', help = '''HiCORE directory path including hicBinning.py, HiCORE.py script files. (default = "./")
+
+''')
+parser.add_argument('-o', dest = 'outdir', default = './', help = '''Path to output directory. (default = "./"
+
+''')
+parser.add_argument('-t', dest = 'thread', default = 1, type=int, help = '''Number of threads. If t>=n, the running time is remarkably reduced but memory-intensive. (default = 1)
+
+''')
 parser.add_argument('-k', dest = 'step', default = 'all', type=str, help = 
-''' 
-Must be one of ["all","BinningOnly","AfterBinning"] 
+'''One of ["all","BinningOnly","AfterBinning"] 
 **BinningOnly : Only For-Rev + Random binning process will be performed, bed files will be provided. 
 **AfterBinning : Resume the process after random-binning completed. All layers in tmp directory will be used for HiCORE analysis
 (default = "all")
@@ -88,7 +103,6 @@ def makeUnitbed():
         
         for i in chrom_context:
             chr_num = i.split('\t')[0].strip()
-            chr_length = i.split('\t')[1].strip()
         
             frag_sites = res_context[c]
             fragments=frag_sites.split(' ')
@@ -227,4 +241,4 @@ if __name__ == '__main__':
             makeInputFile(input_file)
 
     sp.call(f"rm {out_dir}/tmp/*.tmp", shell=True, universal_newlines=True)
-    print(f'Fihished.')
+    print(f'Finished.')
