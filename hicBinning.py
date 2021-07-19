@@ -137,7 +137,7 @@ def makeUnitbed():
 ##### make merged fragment '.bed' files
 
 def CreateMergedBin():
-    if step != "Afterbinning":
+    if step != "AfterBinning":
         chr_command = ' '.join(chr_list)
         sp.call(f'python3 {script_dir}/utils/makeRandomBin.py -g {chrom_size} -r {res_file} -m {min_frag} -o {out_dir} -n {n} -u {out_dir}/tmp/1f_unit.bed -t {t} -c {chr_command}', shell=True, universal_newlines=True)
     
