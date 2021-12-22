@@ -6,31 +6,19 @@ import multiprocessing
 import time
 
 start_time = time.time()
-
-parser = argparse.ArgumentParser(description = 'Make merged FRAG resolution forward/reverse+random-bin abs.bed files', formatter_class=argparse.ArgumentDefaultsHelpFormatter)
-parser.add_argument('-g', dest = 'genomesizeFile', required=True, help = 'Path to chrom.sizes file')
-parser.add_argument('-r', dest = 'restrictionFile', required=True, help = 'Path to wholegenome digestion file, a space-delimited position file')
-parser.add_argument('-u', dest = 'unitBed', required=True, help = 'A single fragment resolution bed file. "make1f_bed.py" can make this file.')
-parser.add_argument('-m', dest = 'minFraglength', required=True, type=int, help = 
-        '''The cut-off bin size. Restriction fragments below the
-        cut-off size will be merged with neighboring fragments''')
-parser.add_argument('-n', dest = 'randomLayerNum', default=2, type=int, help = 'Number of random layers to make.')
-parser.add_argument('-c', dest = 'chromosomes', default = "all", nargs = '*', help = 'Space-separated chromosome names, or "all"')
-parser.add_argument('-o', dest = 'outdir', default = './', help = 'Path to output directory.')
-parser.add_argument('-t', dest = 'thread', type=int, default = 1, help = 'Number of threads. If t>=n, running time is remarkably reduced but memory-intensive.')
-args = parser.parse_args()
-
-chrom_size = args.genomesizeFile
-restriction_sites = open(f'{args.restrictionFile}').readlines()
-min_frag = args.minFraglength
-out_dir = args.outdir
-n = args.randomLayerNum
-unit_bed = args.unitBed
-t = args.thread
-chromosomes = args.chromosomes
-chrom_file = open(f'{chrom_size}').readlines()
-chr_list = []
-
+def parser_argument(args):
+    parser = argparse.ArgumentParser(description = 'Make merged FRAG resolution forward/reverse+random-bin abs.bed files', formatter_class=argparse.ArgumentDefaultsHelpFormatter)
+    parser.add_argument('-g', dest = 'genomesizeFile', required=True, help = 'Path to chrom.sizes file')
+    parser.add_argument('-r', dest = 'restrictionFile', required=True, help = 'Path to wholegenome digestion file, a space-delimited position file')
+    parser.add_argument('-u', dest = 'unitBed', required=True, help = 'A single fragment resolution bed file. "make1f_bed.py" can make this file.')
+    parser.add_argument('-m', dest = 'minFraglength', required=True, type=int, help = 
+            '''The cut-off bin size. Restriction fragments below the
+            cut-off size will be merged with neighboring fragments''')
+    parser.add_argument('-n', dest = 'randomLayerNum', default=2, type=int, help = 'Number of random layers to make.')
+    parser.add_argument('-c', dest = 'chromosomes', default = "all", nargs = '*', help = 'Space-separated chromosome names, or "all"')
+    parser.add_argument('-o', dest = 'outdir', default = './', help = 'Path to output directory.')
+    parser.add_argument('-t', dest = 'thread', type=int, default = 1, help = 'Number of threads. If t>=n, running time is remarkably reduced but memory-intensive.')
+    return parser.parse_args()
 
 ## set chromosomes
 def makeChromlist():
@@ -54,7 +42,6 @@ def Forward_binning():
 
     for i in chrom_file:
         chr_num=i.split('\t')[0].strip()
-        chr_length=i.split('\t')[1].strip()
     
         frag_sites=restriction_sites[c]
         fragments=frag_sites.split(' ')
@@ -113,8 +100,6 @@ def Reverse_binning():
 
     for i in chrom_file:
         chr_num = i.split('\t')[0]
-        chr_length = i.split('\t')[1].strip()
-
         frag_sites = restriction_sites[c]
         fragments=frag_sites.split(' ')
         
@@ -181,7 +166,7 @@ def Reverse_binning():
 
 
 ## make randomly selected merged bin abs file
-random_list = list(range(1,n-1))
+
 
 def Randombin(trial):
     """ Merge nearby restriction fragments over specific length by random selection strategy """
@@ -243,8 +228,6 @@ def Randombin(trial):
                     elif chr_name != unit_context[ran_num + k].split('\t')[0] or chr_name != unit_context[ran_num -m].split('\t')[0]:
                         break
 
-#                    elif frag_list == []:                       
-#                        break
                     ## split the jammed multi-fragments and merge to the neighbor fragments
                     else:
                             
@@ -281,17 +264,32 @@ def Randombin(trial):
         sp.call(f"sort -k5,5n -k4,4n {out_dir}/tmp/Random{trial}_merged{min_frag}.tmp | datamash groupby 1,5 min 2 max 3 | sort -k1,1 -k3,3n | awk '{{print $1, $3, $4, $2}}' OFS='\t' > {out_dir}/tmp/Random{trial}_merged{min_frag}.bed", shell=True, universal_newlines=True)
         sp.call(f"sort -k1,1 -k2,2n {out_dir}/tmp/Random{trial}_merged{min_frag}.tmp | cut -f 1,2,3,5 > {out_dir}/tmp/Random{trial}_merged{min_frag}.overlap_bin.bed", shell=True, universal_newlines=True)
 
-### Process
-makeChromlist()
-Forward_binning()
+if __name__ == '__main__':
+    args = parser_argument(sys.argv[1:])
 
-if n>=2:
-    Reverse_binning()
-    if n>2 and t>1:
-        pool = multiprocessing.Pool(processes=t)
-        pool.map(Randombin,random_list)
-        pool.close()
+    chrom_size = args.genomesizeFile
+    restriction_sites = open(f'{args.restrictionFile}').readlines()
+    min_frag = args.minFraglength
+    out_dir = args.outdir
+    n = args.randomLayerNum
+    unit_bed = args.unitBed
+    t = args.thread
+    chromosomes = args.chromosomes
+    chrom_file = open(f'{chrom_size}').readlines()
+    chr_list = []
+    random_list = list(range(1,n-1))
 
-    elif n>2 and t==1:
-        for trial in random_list:
-            Randombin(trial)
+    ### Process
+    makeChromlist()
+    Forward_binning()
+
+    if n>=2:
+        Reverse_binning()
+        if n>2 and t>1:
+            pool = multiprocessing.Pool(processes=t)
+            pool.map(Randombin,random_list)
+            pool.close()
+
+        elif n>2 and t==1:
+            for trial in random_list:
+                Randombin(trial)
