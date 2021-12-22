@@ -4,42 +4,28 @@ import sys
 import argparse
 import os
 import multiprocessing
+import time
 
 ##usage
 parser = argparse.ArgumentParser(description = "", formatter_class = argparse.RawTextHelpFormatter)
-parser.add_argument('-i', dest = 'Interaction_matrix', required = True, help= '''A HiC interaction matrix including single or multiple chromosome(s) interaction data.
-
-''')
-parser.add_argument('-g', dest = 'genomesizeFile', required=True, help = '''Path to chrom.sizes file
-
-''')
-parser.add_argument('-r', dest = 'restrictionFile', required = True, help = '''Path to genome digestion file, including chromosome name and restriction position in each raw
-
-''')
-parser.add_argument('-f', dest = 'minFraglength', required=True, type = int, help = '''The cutoff bin size. Restriction fragments below the cutoff size will be merged with neighboring fragments
-
-''')
+parser.add_argument('-i', dest = 'Interaction_matrix', required = True, help= 'A HiC interaction matrix including single or multiple chromosome(s) interaction data.')
+parser.add_argument('-g', dest = 'genomesizeFile', required=True, help = 'Path to chrom.sizes file')
+parser.add_argument('-r', dest = 'restrictionFile', required = True, help = 'Path to genome digestion file, including chromosome name and restriction position in each raw')
+parser.add_argument('-f', dest = 'minFraglength', required=True, type = int, help = 'The cutoff bin size. Restriction fragments below the cutoff size will be merged with neighboring fragments')
 parser.add_argument('-n', dest = 'layerNumber', default = 2, type=int, help = 
-'''Number of layers used for HiCORE analysis.
+'''
+Number of layers used for HiCORE analysis.
 (n<=2) : Only forward-reverse binning strategies will be applied.  
 (n>2) : Add randomly merged bin (n-2) times.
 (default = 2)
-
 ''')
-parser.add_argument('-c', dest = 'chromosomes', default='all', nargs='*', help = '''Space-separated chromosome names, or "all". (default = "all")
-
-''')
-parser.add_argument('-j', dest = 'HiCORE_dir', default = './', help = '''HiCORE directory path including hicBinning.py, HiCORE.py script files. (default = "./")
-
-''')
-parser.add_argument('-o', dest = 'outdir', default = './', help = '''Path to output directory. (default = "./"
-
-''')
-parser.add_argument('-t', dest = 'thread', default = 1, type=int, help = '''Number of threads. If t>=n, the running time is remarkably reduced but memory-intensive. (default = 1)
-
-''')
+parser.add_argument('-c', dest = 'chromosomes', default='all', nargs='*', help = 'Space-separated chromosome names, or "all". (default = "all")')
+parser.add_argument('-j', dest = 'HiCORE_dir', default = './', help = 'HiCORE directory path including hicBinning.py, HiCORE.py script files. (default = "./")')
+parser.add_argument('-o', dest = 'outdir', default = './', help = 'Path to output directory. (default = "./"')
+parser.add_argument('-t', dest = 'thread', default = 1, type=int, help = 'Number of threads. If t>=n, the running time is remarkably reduced but memory-intensive. (default = 1)')
 parser.add_argument('-k', dest = 'step', default = 'all', type=str, help = 
-'''One of ["all","BinningOnly","AfterBinning"] 
+''' 
+Must be one of ["all","BinningOnly","AfterBinning"] 
 **BinningOnly : Only For-Rev + Random binning process will be performed, bed files will be provided. 
 **AfterBinning : Resume the process after random-binning completed. All layers in tmp directory will be used for HiCORE analysis
 (default = "all")
@@ -78,11 +64,11 @@ def tmpClearing():
         os.mkdir(f'{out_dir}/tmp')
     elif os.path.isdir(f'{out_dir}/tmp') == True:
         
-        if step == "Afterbinning":
+        if step == "AfterBinning":
             print('\nskip binning process..')
-            global bed_list,overbed_list
-            bed_list = sp.check_output(f'ls {out_dir}/tmp/ | grep bed | grep merged | grep -v overlap', shell=True, universal_newlines=True).strip().split('\n')
-            overbed_list = sp.check_output(f'ls {out_dir}/tmp/ | grep bed | grep merged | grep overlap', shell=True, universal_newlines=True).strip().split('\n')
+            #global bed_list,overbed_list
+            #bed_list = sp.check_output(f'ls {out_dir}/tmp/ | grep bed | grep merged | grep -v overlap', shell=True, universal_newlines=True).strip().split('\n')
+            #overbed_list = sp.check_output(f'ls {out_dir}/tmp/ | grep bed | grep merged | grep overlap', shell=True, universal_newlines=True).strip().split('\n')
 
         elif os.listdir(f'{out_dir}/tmp') != []:
             print(f"\n******{out_dir}/tmp directory is not empty\n")
@@ -96,14 +82,12 @@ def tmpClearing():
 def makeUnitbed():
     b=1
     c=0
-    with open(f'{chrom_size}') as c1, open(f'{res_file}') as r1:
-        chrom_context = c1.readlines()
+    with open(f'{chrom_size}') as c1, open(f'{res_file}') as r1, open(f'{out_dir}/tmp/1f_unit.bed','w') as o1:
+        
         res_context = r1.readlines()
-        writefile = open(f'{out_dir}/tmp/1f_unit.bed', 'w')
-        
-        for i in chrom_context:
-            chr_num = i.split('\t')[0].strip()
-        
+        for i in c1:
+            chr_num, chr_length = i.strip().split('\t')
+                    
             frag_sites = res_context[c]
             fragments=frag_sites.split(' ')
         
@@ -116,7 +100,7 @@ def makeUnitbed():
                         bin_start = str(0)
                         bin_end = str(fragments[a+1].strip())
                         line = chr_num + '\t' + bin_start + '\t' + bin_end + '\t' + bin_num + '\n'
-                        writefile.write(line)
+                        o1.write(line)
 
                     elif a+1 == len(fragments):
                         break
@@ -125,14 +109,11 @@ def makeUnitbed():
                         bin_start = str(fragments[a].strip())
                         bin_end = str(fragments[a+1].strip())
                         line = chr_num + '\t' + bin_start + '\t' + bin_end + '\t' + bin_num + '\n'
-                        writefile.write(line)
+                        o1.write(line)
 
                     a += 1
                     b += 1
             c += 1
-
-        writefile.close()
-
 
 ##### make merged fragment '.bed' files
 
@@ -156,43 +137,35 @@ def makeBinDic(bed_file, overbed_file):
     
     ## make [original restriction-number : merged restriction-number] & [merged restriction-number : exact position] dictionaries.
 
-    with open(f'{out_dir}/tmp/{bed_file}') as b1, open(f'{out_dir}/tmp/{overbed_file}') as o1:
-        bed_context = b1.readlines()
-        overbed_context = o1.readlines()
+    with open(f'{out_dir}/tmp/{bed_file}') as b1, open(f'{out_dir}/tmp/{overbed_file}') as ob1:
         binnum_overbinnum_dic = {}
         overbinnum_mergebin_dic = {}
         c = 1
         
-        for overbed_line in overbed_context:
-            overbinnum = overbed_line.split('\t')[3].strip()
+        for o_line in ob1:
+            overbinnum = o_line.split('\t')[3].strip()
             binnum_overbinnum_dic[str(c)] = overbinnum
             c += 1
-        for bed_line in bed_context:
-            binnum = bed_line.split('\t')[3].strip()
-            mergebin = '\t'.join(bed_line.split('\t')[:3])
+        for b_line in b1:
+            binnum = b_line.split('\t')[3].strip()
+            mergebin = '\t'.join(b_line.split('\t')[:3])
             overbinnum_mergebin_dic[binnum] = mergebin
     
-    ## read a dump file which has consecutive restriction-number through the input chromosomes.
+    ## read a dump file which has consecutive restriction fragment number through the input chromosomes.
             # (The start restriction-number of certain chromosome == the end of just preceding chromosome restriction-number + 1)
     ## Convert the dump file using two dicionaries.
 
-    with open(f'{dump_file}') as d1:
-        dump_context = d1.readlines()
-        dump_outfile = open(f'{out_dir}/tmp/{front_tag}_merged{min_frag}.tmp','w')
-        for dump_line in dump_context:
-
-            dump_bin1 = dump_line.split('\t')[0]
-            dump_bin2 = dump_line.split('\t')[1]
-            dump_count = dump_line.split('\t')[2].strip()
+    with open(dump_file) as d1, open(f'{out_dir}/tmp/{front_tag}_merged{min_frag}.tmp','w') as od1:
+        for dump_line in d1:
+            dump_bin1, dump_bin2, dump_count = dump_line.rstrip().split('\t')
             ## write the converted values
             dump_mergeout_line = overbinnum_mergebin_dic[binnum_overbinnum_dic[dump_bin1]] + '\t' + overbinnum_mergebin_dic[binnum_overbinnum_dic[dump_bin2]] + '\t' + dump_count + '\n'
-            dump_outfile.write(dump_mergeout_line)
-        dump_outfile.close()
+            
+            od1.write(dump_mergeout_line)
         binnum_overbinnum_dic.clear()
         overbinnum_mergebin_dic.clear()
 
     sp.call(f"less {out_dir}/tmp/{front_tag}_merged{min_frag}.tmp | sort -T {out_dir}/tmp/ -k1,1 -k2,2n -k5,5n | datamash groupby 1,2,3,4,5,6 sum 7 | awk '$1==$4' > {out_dir}/tmp/{front_tag}_merged{min_frag}.txt", shell=True, universal_newlines=True)
-    
 
 ##### Make fithic input files
 
@@ -204,9 +177,8 @@ def makeInputFile(input_file):
     sp.call(f"cat {out_dir}/tmp/{input_file}_bin1_datamash.tmp {out_dir}/tmp/{input_file}_bin2_datamash.tmp | sort -T {out_dir}/tmp -k1,1 -k2,2n | datamash groupby 1,2,3 sum 4 | awk '{{print $1, int($2), int(($2+$3)/2), int($4), 1}}' OFS='\t' > {out_dir}/{input_file}.fragments.txt ; gzip {out_dir}/{input_file}.fragments.txt", shell=True, universal_newlines=True)
     
     ## Make '.interaction.txt.gz' files
-    awk_command_i = "'{print $1, int(($2+$3)/2), $4, int(($5+$6)/2), $7}' OFS='\\t'"
+    awk_command_i = "'{print $1, int(($2+$3)/2), $4, int(($5+$6)/2), $7}' OFS='\t'"
     sp.call(f"less {out_dir}/tmp/{input_file} | awk {awk_command_i} > {out_dir}/{input_file}.interaction.txt ; gzip {out_dir}/{input_file}.interaction.txt", shell=True, universal_newlines=True)
-    
 
 ##### whole processes
 
@@ -241,4 +213,4 @@ if __name__ == '__main__':
             makeInputFile(input_file)
 
     sp.call(f"rm {out_dir}/tmp/*.tmp", shell=True, universal_newlines=True)
-    print(f'Finished.')
+    print(f'Fihished.')
