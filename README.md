@@ -1,4 +1,4 @@
-# HiCORE
+# HiCORE: Hi-C analysis for identification of core chromatin looping regions with higher resolutions
 HiCORE was designed to define high-resolution core interacting fragments with our advanced binning strategy.  
 
 
